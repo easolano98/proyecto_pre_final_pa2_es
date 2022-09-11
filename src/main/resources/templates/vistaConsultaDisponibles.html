@@ -11,21 +11,20 @@
 </head>
 
 <body>
-	<form th:action="@{/vehiculos/buscarDisponibles/{marca}(marca=${vehiculo.marca}{modelo}(modelo=${vehiculo.modelo})}" th:object="${vehiculo}" th:method="GET">
+	<form th:action="@{/vehiculos/buscarDisponibles}" th:object="${vehiculo}" method="GET">
 		<table>
 			<tr>
 				<td><label>Marca:</label></td>
-				<td><input type="text" id="marca" th:text="${vehiculo.marca}"></td>
+				<td><input type="text" id="marca" th:field="${vehiculo.marca}" required></td>
 			</tr>
 			<tr>
 				<td><label>Modelo:</label></td>
-				<td><input type="text" id="modelo" th:text="${vehiculo.modelo}"></td>
+				<td><input type="text" id="modelo" th:field="${vehiculo.modelo}" required></td>
 			</tr>
-			
 		</table>
-		<input class="btn btn-dark" type="submit" value="Consultar">
-		</form>
-		
+		<input type="submit" value="Consultar" class="btn btn-primary">
+	</form>
+
 
 </body>
 
