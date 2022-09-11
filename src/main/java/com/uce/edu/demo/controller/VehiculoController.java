@@ -20,7 +20,7 @@ public class VehiculoController {
 	private IVehiculoService vehiculoService;
 	
 	
-	@GetMapping("/buscarDisponibles/{marca}/{modelo}")
+	@GetMapping("/buscarDisponibles/{marca}{modelo}")
 	public String vehiculosDisponibles(@PathVariable("marca")String marca,@PathVariable("modelo")String modelo, Model model) {
 		System.out.println(marca+"---------- "+modelo);
 		List<Vehiculo>disponibles=this.vehiculoService.buscarMarcaModeloDisponible(marca, modelo);
