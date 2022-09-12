@@ -32,7 +32,7 @@ public class GestorReservaServiceImpl implements IGestorReservasService {
 	private static final Logger LOG = Logger.getLogger(GestorReservaServiceImpl.class);
 
 	@Override
-	public void reservarVehiculo(String placa, String cedula, LocalDateTime fechaInicio, LocalDateTime fechaFin) {
+	public String reservarVehiculo(String placa, String cedula, LocalDateTime fechaInicio, LocalDateTime fechaFin) {
 		Vehiculo vehiculo = this.vehiculoRepository.buscarPlaca(placa);
 
 		Cliente cliente = this.clienteRepository.buscarCedula(cedula);
@@ -59,7 +59,7 @@ public class GestorReservaServiceImpl implements IGestorReservasService {
 			this.reservaRepository.actualizar(reserva);
 
 			LOG.info("Número de reserva: " + reserva.getNumero());
-
+			return reserva.getNumero();
 		} else {
 			if (!disponibles.isEmpty()) {
 				LOG.info(" *** Fechas Disponibles ***");
@@ -67,7 +67,7 @@ public class GestorReservaServiceImpl implements IGestorReservasService {
 			} else
 				LOG.info("No hay fechas disponibles en el intervalo de fechas indicado.");
 		}
-
+		return null;
 	}
 
 	@Override
@@ -118,7 +118,5 @@ public class GestorReservaServiceImpl implements IGestorReservasService {
 			System.out.println("Aun no ocurre el dia de reserva");
 		}
 	}
-	
-	
 
 }

@@ -19,31 +19,24 @@
 				<th>Modelo</th>
 				<th>Marca</th>
 				<th>Año</th>
-				<th>Estado</th>
 				<th>Valor por dia</th>
-				
+				<th>Sub Total</th>
+				<th>Total Pagar</th>	
 			</tr>
 		</thead>
 		<tbody>
-			<tr th:each="disponible:${disponibles}">
-				<td th:text="${disponible.placa}"></td>
-				<td th:text="${disponible.modelo}"></td>
-				<td th:text="${disponible.marca}"></td>
-				<td th:text="${disponible.anioFabricacion}"></td>
-				<td th:text="${disponible.estado}"></td>
-				<td th:text="${disponible.valorPorDia}"></td>
+			<tr th:each="vip:${vips}">
+				<td th:text="${vip.placa}"></td>
+				<td th:text="${vip.modelo}"></td>
+				<td th:text="${vip.marca}"></td>
+				<td th:text="${vip.anioFabricacion}"></td>
+				<td th:text="${vip.subTotal}"></td>
+				<td th:text="${vip.totalPagar}"></td>
 			</tr>
 		</tbody>
 	</table>
-	
-	<form action="#" th:action="@{/vehiculos/disponibles}" th:"${vehiculo}" th:method="GET">
+	<form action="#" th:action="@{/reportes/generarReporteVip}" th:"${reporteVip}" th:method="GET">
 		<input class="btn btn-dark" type="submit" value="Volver">
-	</form>
 	
-	
-	<form action="#" th:action="@{/vehiculos/crearReserva}" th:"${reservaDto}" th:method="GET">
-		<input class="btn btn-dark" type="submit" value="Crear Reserva">
-	</form>
-
 </body>
 </html>

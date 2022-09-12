@@ -13,20 +13,22 @@ public class ReporteVIP {
 	private BigDecimal totalPagar;
 
 	private String estadoReporte;
-	
+
 	private String cedula;
-	
+
 	private String apellido;
-	
+
 	private String placa;
-	
+
 	private String marca;
-	
+
 	private String modelo;
-	
-	
-	
-	//SET y GET
+
+	private String fechaInicio;
+
+	private String fechaFin;
+
+	// SET y GET
 	public String getNumero() {
 		return numero;
 	}
@@ -106,11 +108,28 @@ public class ReporteVIP {
 	public void setModelo(String modelo) {
 		this.modelo = modelo;
 	}
-	
-	
-	
-	
-	
-	
 
+	
+	public String getFechaInicio() {
+		return fechaInicio;
+	}
+
+	public void setFechaInicio(String fechaInicio) {
+		this.fechaInicio = fechaInicio;
+	}
+
+	public String getFechaFin() {
+		return fechaFin;
+	}
+
+	public void setFechaFin(String fechaFin) {
+		this.fechaFin = fechaFin;
+	}
+
+	
+	
+	
+	
+	
+	
 }

@@ -5,7 +5,7 @@ import java.util.List;
 
 public interface IGestorReservasService {
 
-	public void reservarVehiculo(String placa, String cedula, LocalDateTime fechaInicio, LocalDateTime fechaFin);
+	public String reservarVehiculo(String placa, String cedula, LocalDateTime fechaInicio, LocalDateTime fechaFin);
 	
 	public List<LocalDateTime> verificarDisponibilidad(String placa, LocalDateTime fechaInicio, LocalDateTime fechaFin);
 	

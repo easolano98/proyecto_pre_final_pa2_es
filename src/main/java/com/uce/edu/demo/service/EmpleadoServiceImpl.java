@@ -129,7 +129,7 @@ public class EmpleadoServiceImpl implements IEmpleadoService {
 			vehiculo.setPlaca(v.getPlaca());
 			vehiculo.setModelo(v.getModelo());
 			vehiculo.setMarca(v.getMarca());
-			vehiculo.setAñoFabricacion(v.getAnioFabricacion());
+			vehiculo.setAnioFabricacion(v.getAnioFabricacion());
 			vehiculo.setValorPorDia(v.getValorPorDia());
 			
 			BigDecimal total= BigDecimal.ZERO;

@@ -10,7 +10,7 @@ public class VehiculoVIP implements Comparable<VehiculoVIP> {
 
 	private String marca;
 
-	private String añoFabricacion;
+	private String anioFabricacion;
 
 	private BigDecimal valorPorDia;
 	
@@ -25,7 +25,7 @@ public class VehiculoVIP implements Comparable<VehiculoVIP> {
 	@Override
 	public String toString() {
 		return "VehiculoVIP [placa=" + placa + ", modelo=" + modelo + ", marca=" + marca + ", añoFabricacion="
-				+ añoFabricacion + ", valorPorDia=" + valorPorDia + ", subTotal=" + subTotal + ", totalPagar="
+				+ anioFabricacion + ", valorPorDia=" + valorPorDia + ", subTotal=" + subTotal + ", totalPagar="
 				+ totalPagar + "]";
 	}
 	
@@ -67,13 +67,15 @@ public class VehiculoVIP implements Comparable<VehiculoVIP> {
 		this.marca = marca;
 	}
 
-	public String getAñoFabricacion() {
-		return añoFabricacion;
+	
+	public String getAnioFabricacion() {
+		return anioFabricacion;
 	}
 
-	public void setAñoFabricacion(String añoFabricacion) {
-		this.añoFabricacion = añoFabricacion;
+	public void setAnioFabricacion(String anioFabricacion) {
+		this.anioFabricacion = anioFabricacion;
 	}
+
 
 	public BigDecimal getValorPorDia() {
 		return valorPorDia;

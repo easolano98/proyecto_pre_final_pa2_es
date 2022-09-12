@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 
 <head>
@@ -11,22 +12,22 @@
 </head>
 
 <body>
-	<form th:action="@{/vehiculos/buscarDisponibles}" th:object="${vehiculo}" th:method="GET">
+	<form th:action="@{/vehiculos/confirmacionReserva/{numero}(numero=${ticket})}" th:object="${ticket}" th:method="POST">
 		<table>
 			<tr>
-				<td><label>Marca:</label></td>
-				<td><input type="text" id="marca" th:field="${vehiculo.marca}"></td>
-			</tr>
-			<tr>
-				<td><label>Modelo:</label></td>
-				<td><input type="text" id="modelo" th:field="${vehiculo.modelo}"></td>
+				<td><label>numero de ticket:</label></td>
+				<td th:text="${ticket}"></td>
 			</tr>
 			
-		</table>
-		<input class="btn btn-dark" type="submit" value="Consultar">
-		</form>
-		
 
+		</table>
+	</form>
+	<form action="#" th:action="@{/vehiculos/disponibles}" th:"${vehiculo}" th:method="GET">
+		<input class="btn btn-dark" type="submit" value="Volver">
+	</form>
+	
+	
+	
 </body>
 
 </html>

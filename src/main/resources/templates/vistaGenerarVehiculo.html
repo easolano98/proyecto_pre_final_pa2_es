@@ -11,15 +11,15 @@
 </head>
 
 <body>
-	<form th:action="@{/vehiculos/buscarDisponibles}" th:object="${vehiculo}" th:method="GET">
+	<form th:action="@{/reportes/buscarVehiculoVip}" th:object="${vehiculoVIP}" th:method="GET">
 		<table>
 			<tr>
-				<td><label>Marca:</label></td>
-				<td><input type="text" id="marca" th:field="${vehiculo.marca}"></td>
+				<td><label>Año:</label></td>
+				<td><input type="text" id="anio" th:field="${vehiculoVIP.anio}"></td>
 			</tr>
 			<tr>
-				<td><label>Modelo:</label></td>
-				<td><input type="text" id="modelo" th:field="${vehiculo.modelo}"></td>
+				<td><label>Mes:</label></td>
+				<td><input type="text" id="mes" th:field="${vehiculoVIP.mes}"></td>
 			</tr>
 			
 		</table>
