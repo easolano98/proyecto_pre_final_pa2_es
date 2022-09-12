@@ -10,7 +10,7 @@ import com.uce.edu.demo.repository.modelo.Cliente;
 
 @Service
 public class ClienteServiceImpl implements IClienteService {
-	
+
 	@Autowired
 	private IClienteRepository clienteRepository;
 
@@ -19,6 +19,12 @@ public class ClienteServiceImpl implements IClienteService {
 		// TODO Auto-generated method stub
 		cliente.setRegistro("C");
 		this.clienteRepository.insertar(cliente);
+	}
+
+	@Override
+	public Cliente buscar(Integer id) {
+		// TODO Auto-generated method stub
+		return this.clienteRepository.buscar(id);
 	}
 
 	@Override
@@ -40,11 +46,15 @@ public class ClienteServiceImpl implements IClienteService {
 	}
 
 	@Override
-	public void eliminar(String cedula) {
+	public void eliminar(Integer id) {
 		// TODO Auto-generated method stub
-		this.clienteRepository.eliminar(cedula);
+		this.clienteRepository.eliminar(id);
 	}
-	
-	
-	
+
+	@Override
+	public void eliminarPorCedula(String cedula) {
+		// TODO Auto-generated method stub
+		this.clienteRepository.eliminarPorCedula(cedula);
+	}
+
 }

@@ -13,20 +13,18 @@ public class ReporteVIP {
 	private BigDecimal totalPagar;
 
 	private String estadoReporte;
-	
+
 	private String cedula;
-	
+
 	private String apellido;
-	
+
 	private String placa;
-	
+
 	private String marca;
-	
+
 	private String modelo;
-	
-	
-	
-	//SET y GET
+
+	// SET y GET
 	public String getNumero() {
 		return numero;
 	}
@@ -106,11 +104,5 @@ public class ReporteVIP {
 	public void setModelo(String modelo) {
 		this.modelo = modelo;
 	}
-	
-	
-	
-	
-	
-	
 
 }

@@ -117,36 +117,43 @@ public class EmpleadoServiceImpl implements IEmpleadoService {
 		LocalDateTime fechaFin = LocalDateTime.parse(formatoFecha);
 
 		List<Vehiculo> vehiculos = this.vehiculoRepository.buscarTodos();
-		
-		for(Vehiculo v: vehiculos) {
-		List<Reserva>reservas=v.getReservas().stream().filter(r-> r.getFechaInicio().compareTo(fechaInicio) >=0 && r.getFechaFin().compareTo(fechaFin)<0).collect(Collectors.toList());
-		v.setReservas(reservas);
-		
+
+		for (Vehiculo v : vehiculos) {
+			List<Reserva> reservas = v.getReservas().stream().filter(
+					r -> r.getFechaInicio().compareTo(fechaInicio) >= 0 && r.getFechaFin().compareTo(fechaFin) < 0)
+					.collect(Collectors.toList());
+			v.setReservas(reservas);
+
 		}
-		
-		List<VehiculoVIP>vip=vehiculos.stream().filter(v->!v.getReservas().isEmpty()).map(v->{
+
+		List<VehiculoVIP> vip = vehiculos.stream().filter(v -> !v.getReservas().isEmpty()).map(v -> {
 			VehiculoVIP vehiculo = new VehiculoVIP();
 			vehiculo.setPlaca(v.getPlaca());
 			vehiculo.setModelo(v.getModelo());
 			vehiculo.setMarca(v.getMarca());
 			vehiculo.setAñoFabricacion(v.getAnioFabricacion());
 			vehiculo.setValorPorDia(v.getValorPorDia());
-			
-			BigDecimal total= BigDecimal.ZERO;
-			BigDecimal subTotal=BigDecimal.ZERO;
-			
-			for(Reserva item: v.getReservas()) {
-				total=total.add(item.getTotalPagar());
-				subTotal=subTotal.add(item.getSubTotal());
+
+			BigDecimal total = BigDecimal.ZERO;
+			BigDecimal subTotal = BigDecimal.ZERO;
+
+			for (Reserva item : v.getReservas()) {
+				total = total.add(item.getTotalPagar());
+				subTotal = subTotal.add(item.getSubTotal());
 			}
 			vehiculo.setTotalPagar(total);
 			vehiculo.setSubTotal(subTotal);
-			
+
 			return vehiculo;
 		}).sorted(Comparator.reverseOrder()).collect(Collectors.toList());
-		
 
 		return vip;
+	}
+
+	@Override
+	public List<Cliente> verClientes() {
+		// TODO Auto-generated method stub
+		return this.clienteRepository.buscarTodos();
 	}
 
 }
