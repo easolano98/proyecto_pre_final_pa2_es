@@ -16,6 +16,7 @@ import com.uce.edu.demo.repository.IVehiculoRepository;
 import com.uce.edu.demo.repository.modelo.Cliente;
 import com.uce.edu.demo.repository.modelo.Reserva;
 import com.uce.edu.demo.repository.modelo.Vehiculo;
+import com.uce.edu.demo.repository.modelo.dto.VehiculoVIP;
 
 @Service
 public class GestorReservaServiceImpl implements IGestorReservasService {
@@ -62,7 +63,7 @@ public class GestorReservaServiceImpl implements IGestorReservasService {
 			return reserva.getNumero();
 		} else {
 			if (!disponibles.isEmpty()) {
-				LOG.info(" *** Fechas Disponibles ***");
+				LOG.info("  Fechas Disponibles ");
 				disponibles.forEach(f -> LOG.info(f.getDayOfMonth() + "/" + f.getMonthValue() + "/" + f.getYear()));
 			} else
 				LOG.info("No hay fechas disponibles en el intervalo de fechas indicado.");
@@ -105,18 +106,27 @@ public class GestorReservaServiceImpl implements IGestorReservasService {
 	}
 
 	@Override
-	public void retirarVehiculo(String numero) {
+	public VehiculoVIP retirarVehiculo(String numero) {
 		// TODO Auto-generated method stub
+		VehiculoVIP v = new VehiculoVIP();
+
 		Reserva r = this.reservaRepository.buscarNumero(numero);
 		// Dia reserva <= dia actual
 		if (r.getFechaInicio().getDayOfYear() <= LocalDateTime.now().getDayOfYear() && r.getEstado().equals("G")) {
 			r.getVehiculo().setEstado("ND");
 			r.setEstado("E");
+			v.setPlaca(r.getVehiculo().getPlaca());
+			v.setModelo(r.getVehiculo().getModelo());
+			v.setEstado(r.getVehiculo().getEstado());
+			v.setFechaInicio(r.getFechaInicio());
+			v.setFechaFin(r.getFechaFin());
+
 			this.vehiculoRepository.actualizar(r.getVehiculo());
 			this.reservaRepository.actualizar(r);
 		} else {
 			System.out.println("Aun no ocurre el dia de reserva");
 		}
+		return v;
 	}
 
 }

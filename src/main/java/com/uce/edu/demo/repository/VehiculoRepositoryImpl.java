@@ -13,7 +13,7 @@ import com.uce.edu.demo.repository.modelo.Vehiculo;
 
 @Repository
 @Transactional
-public class VehiculoRepositoryImpl implements IVehiculoRepository{
+public class VehiculoRepositoryImpl implements IVehiculoRepository {
 	@PersistenceContext
 	private EntityManager entityManager;
 
@@ -26,7 +26,8 @@ public class VehiculoRepositoryImpl implements IVehiculoRepository{
 	@Override
 	public Vehiculo buscarPlaca(String placa) {
 		// TODO Auto-generated method stub
-		TypedQuery<Vehiculo>query=this.entityManager.createQuery("SELECT v FROM Vehiculo v WHERE v.placa=:datoPlaca",Vehiculo.class);
+		TypedQuery<Vehiculo> query = this.entityManager.createQuery("SELECT v FROM Vehiculo v WHERE v.placa=:datoPlaca",
+				Vehiculo.class);
 		query.setParameter("datoPlaca", placa);
 		return query.getSingleResult();
 	}
@@ -34,11 +35,12 @@ public class VehiculoRepositoryImpl implements IVehiculoRepository{
 	@Override
 	public List<Vehiculo> buscarMarca(String marca) {
 		// TODO Auto-generated method stub
-		TypedQuery<Vehiculo>query=this.entityManager.createQuery("SELECT v FROM Vehiculo v WHERE v.marca=:datoMarca",Vehiculo.class);
+		TypedQuery<Vehiculo> query = this.entityManager.createQuery("SELECT v FROM Vehiculo v WHERE v.marca=:datoMarca",
+				Vehiculo.class);
 		query.setParameter("datoMarca", marca);
 		return query.getResultList();
 	}
-	
+
 	@Override
 	public void actualizar(Vehiculo vehiculo) {
 		// TODO Auto-generated method stub
@@ -54,11 +56,14 @@ public class VehiculoRepositoryImpl implements IVehiculoRepository{
 	@Override
 	public List<Vehiculo> buscarTodos() {
 		// TODO Auto-generated method stub
-		TypedQuery<Vehiculo>query=this.entityManager.createQuery("SELECT v FROM Vehiculo v",Vehiculo.class);
-		List<Vehiculo>lista=query.getResultList();
-		lista.forEach(v->v.getReservas().size());
+		TypedQuery<Vehiculo> query = this.entityManager.createQuery("SELECT v FROM Vehiculo v", Vehiculo.class);
+		List<Vehiculo> lista = query.getResultList();
+		lista.forEach(v -> {
+			if (v.getReservas() != null) {
+				v.getReservas().size();
+			}
+		});
 		return lista;
 	}
 
-	
 }

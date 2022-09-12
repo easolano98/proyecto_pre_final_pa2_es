@@ -66,7 +66,6 @@ public class EmpleadoServiceImpl implements IEmpleadoService {
 			reporte.setModelo(r.getVehiculo().getModelo());
 
 			return reporte;
-
 		}).collect(Collectors.toList());
 
 		return vip;
@@ -83,8 +82,10 @@ public class EmpleadoServiceImpl implements IEmpleadoService {
 			cliente.setNombre(c.getNombre());
 			cliente.setApellido(c.getApellido());
 			BigDecimal valorSuma = BigDecimal.ZERO;
-			for (Reserva item : c.getReservas()) {
-				valorSuma = valorSuma.add(item.getTotalPagar());
+			if (c.getReservas() != null) {
+				for (Reserva item : c.getReservas()) {
+					valorSuma = valorSuma.add(item.getTotalPagar());
+				}
 			}
 			cliente.setValorTotal(valorSuma);
 			cliente.setIva(valorSuma.multiply(new BigDecimal(12).divide(new BigDecimal(100))));
@@ -113,20 +114,21 @@ public class EmpleadoServiceImpl implements IEmpleadoService {
 
 		if (mes.length() < 2)
 			mes = "0" + mes;
-		formatoFecha = anio.concat("-" + mes + "-01T00:00:00");
+		formatoFecha = anio.concat("-" + mes + "-01T23:59:00");
 		LocalDateTime fechaFin = LocalDateTime.parse(formatoFecha);
 
 		List<Vehiculo> vehiculos = this.vehiculoRepository.buscarTodos();
 
 		for (Vehiculo v : vehiculos) {
-			List<Reserva> reservas = v.getReservas().stream().filter(
-					r -> r.getFechaInicio().compareTo(fechaInicio) >= 0 && r.getFechaFin().compareTo(fechaFin) < 0)
-					.collect(Collectors.toList());
-			v.setReservas(reservas);
-
+			if (v.getReservas() != null) {
+				List<Reserva> reservas = v.getReservas().stream().filter(
+						r -> r.getFechaInicio().compareTo(fechaInicio) >= 0 && r.getFechaFin().compareTo(fechaFin) < 0)
+						.collect(Collectors.toList());
+				v.setReservas(reservas);
+			}
 		}
 
-		List<VehiculoVIP> vip = vehiculos.stream().filter(v -> !v.getReservas().isEmpty()).map(v -> {
+		List<VehiculoVIP> vip = vehiculos.stream().filter(v -> v.getReservas() != null).map(v -> {
 			VehiculoVIP vehiculo = new VehiculoVIP();
 			vehiculo.setPlaca(v.getPlaca());
 			vehiculo.setModelo(v.getModelo());
@@ -161,5 +163,4 @@ public class EmpleadoServiceImpl implements IEmpleadoService {
 		// TODO Auto-generated method stub
 		return this.vehiculoRepository.buscarTodos();
 	}
-
 }
