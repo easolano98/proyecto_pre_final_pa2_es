@@ -14,55 +14,45 @@ import com.uce.edu.demo.repository.modelo.dto.ReporteVIP;
 import com.uce.edu.demo.repository.modelo.dto.VehiculoVIP;
 import com.uce.edu.demo.service.IEmpleadoService;
 
-
 @Controller
 @RequestMapping("/reportes")
 public class ReporteController {
 	@Autowired
 	private IEmpleadoService empleadoService;
-	
+
 	@GetMapping("/buscarReporteVip")
 	public String buscarTodos(ReporteVIP reporte, Model modelo) {
-		List<ReporteVIP> vip = this.empleadoService.reporteVIP(LocalDateTime.parse(reporte.getFechaInicio().concat("T00:00:00")), LocalDateTime.parse(reporte.getFechaFin().concat("T00:00:00")) );
+		List<ReporteVIP> vip = this.empleadoService.reporteVIP(
+				LocalDateTime.parse(reporte.getFechaInicio().concat("T00:00:00")),
+				LocalDateTime.parse(reporte.getFechaFin().concat("T00:00:00")));
 		modelo.addAttribute("vips", vip);
 		return "vistaReporteVip";
 	}
-	
+
 	@GetMapping("/generarReporteVip")
-	public String generaReporteVip(ReporteVIP reporteVip,  Model modelo) {
+	public String generaReporteVip(ReporteVIP reporteVip, Model modelo) {
 		modelo.addAttribute("reporteVip", reporteVip);
 		return "vistaGenerarReporte";
 	}
-	
-	
+
 	@GetMapping("/buscarClientesVip")
 	public String buscarTodos(Model modelo) {
-		List<ClienteVIP>clienteVip=this.empleadoService.clientesVIP();
+		List<ClienteVIP> clienteVip = this.empleadoService.clientesVIP();
 		modelo.addAttribute("clientes", clienteVip);
 		return "vistaClientesVip";
 	}
-	
-	
+
 	@GetMapping("/generarVehiculoVip")
-	public String generarBusquedaVehiculos (VehiculoVIP vehiculoVip,  Model modelo) {
+	public String generarBusquedaVehiculos(VehiculoVIP vehiculoVip, Model modelo) {
 		modelo.addAttribute("vehiculoVIP", vehiculoVip);
 		return "vistaGenerarVehiculo";
 	}
-	
+
 	@GetMapping("/buscarVehiculoVip")
-	public String buscarVehiculos(VehiculoVIP vehiculo,  Model modelo) {
-		List<VehiculoVIP>vip=this.empleadoService.vehiculosVIP(vehiculo.getAnio(), vehiculo.getMes());
+	public String buscarVehiculos(VehiculoVIP vehiculo, Model modelo) {
+		List<VehiculoVIP> vip = this.empleadoService.vehiculosVIP(vehiculo.getAnio(), vehiculo.getMes());
 		modelo.addAttribute("vips", vip);
 		return "vistaVehiculoVip";
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
 }
