@@ -8,6 +8,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -32,6 +33,13 @@ public class EmpleadoController {
 		return "vistaEmplClientes";
 	}
 
+	@PostMapping("/registrar")
+	public String registrarCliente(Cliente cliente) {
+		System.out.println(" - " + cliente.getCedula());
+		this.iEmpleadoService.registrarCliente(cliente);
+		return "redirect:/empl/clientes";
+	}
+
 	@GetMapping("/clienteBusq/{id}")
 	public String buscarCliente(@PathVariable("id") Integer id, Model modelo) {
 		Cliente c = this.iClienteService.buscar(id);
@@ -54,10 +62,10 @@ public class EmpleadoController {
 	}
 
 	// Metodos de redireccionamiento a paginas
-	@GetMapping("/registrar")
-	public String registrarCliente() {
-
-		return "";
+	@GetMapping("/registroCliente")
+	public String registo(Cliente c, Model modelo) {
+		modelo.addAttribute("cliente", c);
+		return "vistaEmplInsertarCliente";
 	}
 
 	@GetMapping("/actualizarC/{id}")
