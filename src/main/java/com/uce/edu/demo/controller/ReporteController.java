@@ -22,8 +22,8 @@ public class ReporteController {
 	private IEmpleadoService empleadoService;
 	
 	@GetMapping("/buscarReporteVip")
-	public String buscarTodos(ReporteVIP reporte, Model modelo) {
-		List<ReporteVIP> vip = this.empleadoService.reporteVIP(LocalDateTime.parse(reporte.getFechaInicio().concat("T00:00:00")), LocalDateTime.parse(reporte.getFechaFin().concat("T00:00:00")) );
+	public String buscarReporteVip(ReporteVIP reporte, Model modelo) {
+		List<ReporteVIP> vip = this.empleadoService.reporteVIP(LocalDateTime.parse(reporte.getFechaInicio()), LocalDateTime.parse(reporte.getFechaFin()) );
 		modelo.addAttribute("vips", vip);
 		return "vistaReporteVip";
 	}
@@ -36,7 +36,7 @@ public class ReporteController {
 	
 	
 	@GetMapping("/buscarClientesVip")
-	public String buscarTodos(Model modelo) {
+	public String buscarClienteVip(Model modelo) {
 		List<ClienteVIP>clienteVip=this.empleadoService.clientesVIP();
 		modelo.addAttribute("clientes", clienteVip);
 		return "vistaClientesVip";

@@ -22,12 +22,16 @@
 				<td><input type="text" id="cedula" th:field="*{cedula}" required></td>
 			</tr>
 			<tr>
-				<td><label>fecha inicio (aaaa-mm-dd):</label></td>
-				<td><input type="text" id="fechaInicio" th:field="*{fechaInicio}" required></td>
+				<td><label>fecha inicio:</label></td>
+				<td><input type="datetime-local" id="fechaInicio" th:field="*{fechaInicio}" required></td>
 			</tr>
 			<tr>
-				<td><label>fecha fin (aaaa-mm-dd):</label></td>
-				<td><input type="text" id="fechaFin" th:field="*{fechaFin}" required></td>
+				<td><label>fecha fin:</label></td>
+				<td><input type="datetime-local" id="fechaFin" th:field="*{fechaFin}" required></td>
+			</tr>
+			<tr>
+				<td><label>tarjeta credito:</label></td>
+				<td><input type="text" id="tarjeta" th:field="*{tarjetaCredito}" required></td>
 			</tr>
 
 		</table>

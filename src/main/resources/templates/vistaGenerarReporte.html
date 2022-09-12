@@ -11,15 +11,21 @@
         <table class="table table-bordered">
             <tr>
                 <td><label>Fecha Inicio:</label></td>
-                <td><input type="text" id="fecha Inicio" th:field="${reporteVip.fechaInicio}"></td>
+                <td><input type="datetime-local" id="fecha Inicio" th:field="${reporteVip.fechaInicio}"></td>
             </tr>
             <tr>
                 <td><label>Fecha Fin:</label></td>
-                <td><input type="text" id="fecha Fin" th:field="${reporteVip.fechaFin}"></td>
+                <td><input type="datetime-local" id="fecha Fin" th:field="${reporteVip.fechaFin}"></td>
             </tr> 
         </table>
         <input type="submit" value="Consultar" class="btn btn-primary">
     </form>
+    <form th:action="@{/menus/reportes}" th:method="GET">
+		<input class="btn btn-dark" type="submit" value="Volver">
+	</form>
+
+    
+    
 </body>
 
 </html>

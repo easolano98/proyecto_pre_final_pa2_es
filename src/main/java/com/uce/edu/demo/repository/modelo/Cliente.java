@@ -39,10 +39,14 @@ public class Cliente {
 
 	@Column(name = "clien_registro")
 	private String registro;
-
+	
+	@Column(name="clien_numero_tarjeta")
+	private String numeroTarjeta;
+	
+	
 	@OneToMany(mappedBy = "cliente")
 	private List<Reserva> reservas;
-
+	
 	// SET y GET
 	public String getCedula() {
 		return cedula;
@@ -108,4 +112,14 @@ public class Cliente {
 		this.id = id;
 	}
 
+	public String getNumeroTarjeta() {
+		return numeroTarjeta;
+	}
+
+	public void setNumeroTarjeta(String numeroTarjeta) {
+		this.numeroTarjeta = numeroTarjeta;
+	}
+	
+	
+	
 }

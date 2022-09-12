@@ -21,11 +21,15 @@
 				<td><label>Mes:</label></td>
 				<td><input type="text" id="mes" th:field="${vehiculoVIP.mes}"></td>
 			</tr>
-			
+
 		</table>
 		<input class="btn btn-dark" type="submit" value="Consultar">
-		</form>
-		
+	</form>
+
+	<form th:action="@{/menus/reportes}" th:method="GET">
+		<input class="btn btn-dark" type="submit" value="Volver">
+	</form>
+
 
 </body>
 

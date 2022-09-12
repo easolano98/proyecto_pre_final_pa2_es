@@ -18,11 +18,9 @@ import com.uce.edu.demo.service.IClienteService;
 @RequestMapping("/clientes")
 public class ClienteController {
 
-	
 	@Autowired
 	private IClienteService clienteService;
-	
-	
+
 	@PostMapping("/registrar")
 	public String registrarCliente(ClienteDTO cliente) {
 		System.out.println(" - " + cliente.getCedula());
@@ -35,39 +33,40 @@ public class ClienteController {
 		this.clienteService.insertar(c);
 		return "redirect:/menus/cliente";
 	}
-	
+
 	@GetMapping("/registroCliente")
 	public String registo(ClienteDTO c, Model modelo) {
 		modelo.addAttribute("cliente", c);
 		return "vistaCliInsertarCliente";
 	}
-	
+
 	@GetMapping("/actualizarCliente")
-	public String actualizarC( ClienteDTO cliente, Model modelo) {
+	public String actualizarC(ClienteDTO cliente, Model modelo) {
 		modelo.addAttribute("cliente", cliente);
 		return "vistaClieActualizarCliente";
 	}
-	
+
 	@PutMapping("/actualizar")
 	public String actualizarDatos(ClienteDTO cliente) {
 		Cliente c = this.clienteService.buscarCedula(cliente.getCedula());
 		c.setNombre(cliente.getNombre());
 		c.setApellido(cliente.getApellido());
 		c.setGenero(cliente.getGenero());
-		
+
 		this.clienteService.actualizar(c);
 		return "redirect:/menus/cliente";
 	}
-	
+
 	@GetMapping("/buscarDisponibles")
 	public String buscarDisponibles() {
 		return "redirect:/vehiculos/disponibles";
 	}
-	
+
 	@GetMapping("/reservarCliente")
 	public String reservar() {
 		return "redirect:/vehiculos/crearReserva";
 	}
-	
-	
+
+
+
 }

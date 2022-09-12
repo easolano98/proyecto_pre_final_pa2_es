@@ -21,7 +21,7 @@
 				<th>Año</th>
 				<th>Valor por dia</th>
 				<th>Sub Total</th>
-				<th>Total Pagar</th>	
+				<th>Valor Total</th>	
 			</tr>
 		</thead>
 		<tbody>
@@ -30,6 +30,7 @@
 				<td th:text="${vip.modelo}"></td>
 				<td th:text="${vip.marca}"></td>
 				<td th:text="${vip.anioFabricacion}"></td>
+				<td th:text="${vip.valorPorDia}"></td>
 				<td th:text="${vip.subTotal}"></td>
 				<td th:text="${vip.totalPagar}"></td>
 			</tr>
@@ -37,6 +38,9 @@
 	</table>
 	<form action="#" th:action="@{/reportes/generarReporteVip}" th:"${reporteVip}" th:method="GET">
 		<input class="btn btn-dark" type="submit" value="Volver">
+	</form>
+	
+	
 	
 </body>
 </html>

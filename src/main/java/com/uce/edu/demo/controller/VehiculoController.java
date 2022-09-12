@@ -2,6 +2,7 @@ package com.uce.edu.demo.controller;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -12,11 +13,13 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.uce.edu.demo.repository.modelo.Cliente;
 import com.uce.edu.demo.repository.modelo.Reserva;
 import com.uce.edu.demo.repository.modelo.Vehiculo;
 import com.uce.edu.demo.repository.modelo.dto.ReporteVIP;
 import com.uce.edu.demo.repository.modelo.dto.VehiculoVIP;
 import com.uce.edu.demo.repository.modelo.dto.controller.ReservaDto;
+import com.uce.edu.demo.service.IClienteService;
 import com.uce.edu.demo.service.IGestorReservasService;
 import com.uce.edu.demo.service.IReservaService;
 import com.uce.edu.demo.service.IVehiculoService;
@@ -31,6 +34,8 @@ public class VehiculoController {
 	private IGestorReservasService gestorReservasService;
 	@Autowired
 	private IReservaService reservaService;
+	@Autowired
+	private IClienteService clienteService;
 
 	@GetMapping("/disponibles")
 	public String consultaDisponibles(Vehiculo vehiculo) {
@@ -52,13 +57,32 @@ public class VehiculoController {
 
 	@PostMapping("/reservar")
 	public String reservarVehiculo(ReservaDto reserva, Model modelo) {
+		List<LocalDateTime> rangoFecha = this.gestorReservasService
+				.rangoFecha(LocalDateTime.parse(reserva.getFechaInicio()), LocalDateTime.parse(reserva.getFechaFin()));
+		List<LocalDateTime> fechasDisponibles = this.gestorReservasService.verificarDisponibilidad(reserva.getPlaca(),
+				LocalDateTime.parse(reserva.getFechaInicio()), LocalDateTime.parse(reserva.getFechaFin()));
+		if (rangoFecha.size() == fechasDisponibles.size()) {
+			Cliente c = this.clienteService.buscarCedula(reserva.getCedula());
 
-		String numeroReserva = this.gestorReservasService.reservarVehiculo(reserva.getPlaca(), reserva.getCedula(),
-				LocalDateTime.parse(reserva.getFechaInicio().concat("T00:00:00")),
-				LocalDateTime.parse(reserva.getFechaFin().concat("T23:59:00")));
-		System.out.println(numeroReserva);
-		modelo.addAttribute("ticket", numeroReserva);
-		return "vistaConfirmacion";
+			c.setNumeroTarjeta(reserva.getTarjetaCredito());
+			this.clienteService.actualizar(c);
+			String numeroReserva = this.gestorReservasService.reservarVehiculo(reserva.getPlaca(), reserva.getCedula(),
+					LocalDateTime.parse(reserva.getFechaInicio()), LocalDateTime.parse(reserva.getFechaFin()));
+			System.out.println(numeroReserva);
+			modelo.addAttribute("ticket", numeroReserva);
+			return "vistaConfirmacion";
+		} else {
+			List<VehiculoVIP>lista=fechasDisponibles.stream().map(f -> {
+				VehiculoVIP v = new VehiculoVIP();
+				v.setFechaInicio(f);
+
+				return v;
+
+			}).collect(Collectors.toList());
+			modelo.addAttribute("fechas", lista);
+
+			return "vistaFechasDisponibles";
+		}
 	}
 
 	@GetMapping("/confirmacionReserva/{numero}")
@@ -73,20 +97,21 @@ public class VehiculoController {
 	}
 
 	@GetMapping("/vehiculoReservado")
-	public String presentarReserva(Model modelo, VehiculoVIP vehiculoVIP) {
-		modelo.addAttribute("verificacion", vehiculoVIP);
+	public String presentarReserva(Model modelo, VehiculoVIP vip) {
+		modelo.addAttribute("verificacion", vip);
 
 		return "vistaBuscarVehiculoReservado";
 	}
 
-	@GetMapping("/reservados/{numero}")
-	public String retirarVehiculo(@PathVariable("numero") String numero, Reserva reserva, Model modelo) {
-		VehiculoVIP vehiculoVIP = this.gestorReservasService.retirarVehiculo(numero);
+	@GetMapping("/reservados")
+	public String retirarVehiculo(VehiculoVIP vip, Model modelo) {
+		VehiculoVIP vehiculoVIP = this.gestorReservasService.retirarVehiculo(vip.getNumeroReserva());
+
 		modelo.addAttribute("retirar", vehiculoVIP);
 
 		return "vistaRetirarVehiculo";
 	}
-	
+
 	@PutMapping("/noReservados")
 	public String sinReservarVehiculo(ReporteVIP reporte) {
 
@@ -106,9 +131,5 @@ public class VehiculoController {
 		modelo.addAttribute("reporte", reporte);
 		return "vistaNoReservados";
 	}
-	
-	
-	
-	
 
 }

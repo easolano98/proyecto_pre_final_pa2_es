@@ -13,4 +13,6 @@ public interface IGestorReservasService {
 	
 	public VehiculoVIP retirarVehiculo(String numero);
 	
+	public List<LocalDateTime> rangoFecha(LocalDateTime fechaInicio, LocalDateTime fechaFin);
+	
 }

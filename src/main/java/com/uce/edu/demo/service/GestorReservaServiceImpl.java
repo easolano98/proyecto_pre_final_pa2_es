@@ -93,8 +93,8 @@ public class GestorReservaServiceImpl implements IGestorReservasService {
 
 		return disponibles;
 	}
-
-	private List<LocalDateTime> rangoFecha(LocalDateTime fechaInicio, LocalDateTime fechaFin) {
+	@Override
+	public List<LocalDateTime> rangoFecha(LocalDateTime fechaInicio, LocalDateTime fechaFin) {
 		List<LocalDateTime> rangoFecha = new ArrayList<>();
 		rangoFecha.add(fechaInicio);
 		int tiempoReserva = fechaFin.getDayOfYear() - fechaInicio.getDayOfYear();

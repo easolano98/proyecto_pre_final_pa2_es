@@ -6,7 +6,7 @@ public class ReservaDto {
 	private String cedula;
 	private String fechaInicio;
 	private String fechaFin;
-	
+	private String tarjetaCredito;
 	
 	//SET y GET
 	public String getPlaca() {
@@ -32,6 +32,12 @@ public class ReservaDto {
 	}
 	public void setFechaFin(String fechaFin) {
 		this.fechaFin = fechaFin;
+	}
+	public String getTarjetaCredito() {
+		return tarjetaCredito;
+	}
+	public void setTarjetaCredito(String tarjetaCredito) {
+		this.tarjetaCredito = tarjetaCredito;
 	}
 	
 	
