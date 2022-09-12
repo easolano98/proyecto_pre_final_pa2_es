@@ -14,12 +14,14 @@ public interface IEmpleadoService {
 
 	public void ingresarVehiculo(Vehiculo vehiculo);
 
-	public List<ReporteVIP>reporteVIP(LocalDateTime fechaInicio, LocalDateTime fechaFin);
+	public List<ReporteVIP> reporteVIP(LocalDateTime fechaInicio, LocalDateTime fechaFin);
+
+	public List<ClienteVIP> clientesVIP();
+
+	public List<VehiculoVIP> vehiculosVIP(String anio, String mes);
+
+	public List<Cliente> verClientes();
 	
-	public List<ClienteVIP>clientesVIP();
-	
-	public List<VehiculoVIP>vehiculosVIP(String anio, String mes);
-	
-	
+	public List<Vehiculo>verVehiculos();
 
 }
