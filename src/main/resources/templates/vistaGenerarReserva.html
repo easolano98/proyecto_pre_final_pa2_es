@@ -33,10 +33,13 @@
 		</table>
 		<input class="btn btn-dark" type="submit" value="Reservar">
 	</form>
+	<form th:action="@{/vehiculos/vistaNoReservados}" th:object="${vehiculo}" th:method="GET">
+		<input class="btn btn-dark" type="submit" value="Sin Reservar">
+	</form>
 	<form action="#" th:action="@{/vehiculos/disponibles}" th:"${vehiculo}" th:method="GET">
 		<input class="btn btn-dark" type="submit" value="Volver">
 	</form>
-	
+
 
 </body>
 
