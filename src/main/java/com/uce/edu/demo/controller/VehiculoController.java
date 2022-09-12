@@ -44,10 +44,18 @@ public class VehiculoController {
 
 	@GetMapping("/buscarDisponibles")
 	public String vehiculosDisponibles(Vehiculo vehiculo, Model model) {
-		List<Vehiculo> disponibles = this.vehiculoService.buscarMarcaModeloDisponible(vehiculo.getMarca(),
-				vehiculo.getModelo());
-		model.addAttribute("disponibles", disponibles);
-		return "vistaBusquedaDisponibles";
+		try {
+			List<Vehiculo> disponibles = this.vehiculoService.buscarMarcaModeloDisponible(vehiculo.getMarca(),
+					vehiculo.getModelo());
+			if (disponibles.isEmpty()) {
+				return "redirect:/vehiculos/disponibles";
+			}
+
+			model.addAttribute("disponibles", disponibles);
+			return "vistaBusquedaDisponibles";
+		} catch (Exception e) {
+			return "redirect:/vehiculos/disponibles";
+		}
 	}
 
 	@GetMapping("/crearReserva")
@@ -57,31 +65,37 @@ public class VehiculoController {
 
 	@PostMapping("/reservar")
 	public String reservarVehiculo(ReservaDto reserva, Model modelo) {
-		List<LocalDateTime> rangoFecha = this.gestorReservasService
-				.rangoFecha(LocalDateTime.parse(reserva.getFechaInicio()), LocalDateTime.parse(reserva.getFechaFin()));
-		List<LocalDateTime> fechasDisponibles = this.gestorReservasService.verificarDisponibilidad(reserva.getPlaca(),
-				LocalDateTime.parse(reserva.getFechaInicio()), LocalDateTime.parse(reserva.getFechaFin()));
-		if (rangoFecha.size() == fechasDisponibles.size()) {
-			Cliente c = this.clienteService.buscarCedula(reserva.getCedula());
-
-			c.setNumeroTarjeta(reserva.getTarjetaCredito());
-			this.clienteService.actualizar(c);
-			String numeroReserva = this.gestorReservasService.reservarVehiculo(reserva.getPlaca(), reserva.getCedula(),
+		try {
+			List<LocalDateTime> rangoFecha = this.gestorReservasService.rangoFecha(
 					LocalDateTime.parse(reserva.getFechaInicio()), LocalDateTime.parse(reserva.getFechaFin()));
-			System.out.println(numeroReserva);
-			modelo.addAttribute("ticket", numeroReserva);
-			return "vistaConfirmacion";
-		} else {
-			List<VehiculoVIP>lista=fechasDisponibles.stream().map(f -> {
-				VehiculoVIP v = new VehiculoVIP();
-				v.setFechaInicio(f);
+			List<LocalDateTime> fechasDisponibles = this.gestorReservasService.verificarDisponibilidad(
+					reserva.getPlaca(), LocalDateTime.parse(reserva.getFechaInicio()),
+					LocalDateTime.parse(reserva.getFechaFin()));
+			if (rangoFecha.size() == fechasDisponibles.size()) {
+				Cliente c = this.clienteService.buscarCedula(reserva.getCedula());
 
-				return v;
+				c.setNumeroTarjeta(reserva.getTarjetaCredito());
+				this.clienteService.actualizar(c);
+				String numeroReserva = this.gestorReservasService.reservarVehiculo(reserva.getPlaca(),
+						reserva.getCedula(), LocalDateTime.parse(reserva.getFechaInicio()),
+						LocalDateTime.parse(reserva.getFechaFin()));
+				System.out.println(numeroReserva);
+				modelo.addAttribute("ticket", numeroReserva);
+				return "vistaConfirmacion";
+			} else {
+				List<VehiculoVIP> lista = fechasDisponibles.stream().map(f -> {
+					VehiculoVIP v = new VehiculoVIP();
+					v.setFechaInicio(f);
 
-			}).collect(Collectors.toList());
-			modelo.addAttribute("fechas", lista);
+					return v;
 
-			return "vistaFechasDisponibles";
+				}).collect(Collectors.toList());
+				modelo.addAttribute("fechas", lista);
+
+				return "vistaFechasDisponibles";
+			}
+		} catch (Exception e) {
+			return "redirect:/vehiculos/crearReserva";
 		}
 	}
 
@@ -105,11 +119,15 @@ public class VehiculoController {
 
 	@GetMapping("/reservados")
 	public String retirarVehiculo(VehiculoVIP vip, Model modelo) {
-		VehiculoVIP vehiculoVIP = this.gestorReservasService.retirarVehiculo(vip.getNumeroReserva());
+		try {
+			VehiculoVIP vehiculoVIP = this.gestorReservasService.retirarVehiculo(vip.getNumeroReserva());
 
-		modelo.addAttribute("retirar", vehiculoVIP);
+			modelo.addAttribute("retirar", vehiculoVIP);
 
-		return "vistaRetirarVehiculo";
+			return "vistaRetirarVehiculo";
+		} catch (Exception e) {
+			return "redirect:/vehiculos/vehiculoReservado";
+		}
 	}
 
 	@PutMapping("/noReservados")

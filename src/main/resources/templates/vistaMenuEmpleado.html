@@ -12,36 +12,53 @@
 		integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 </head>
 
+<style>
+	body {
+		background-color: rgb(204, 255, 238);
+	}
+</style>
+
+<style>
+	body {
+		background-image: url('https://www.budget.com/budgetWeb/images/newlayout/budgetLogoNew1.png');
+		background-repeat: no-repeat;
+		background-attachment: fixed;
+		background-size: 1300px 900px;
+	}
+</style>
+
+<h1 style="text-align:center">Budget Rent A Car</h1>
+
 <body>
 	<form th:action="@{/empl/clientes}" th:method="GET">
-		<h1>
-			<input type="submit" value="clientes">
+		<h1 style="text-align:center">
+			<input type="submit" value="clientes" class="btn btn-primary">
 		</h1>
 	</form>
 
 	<form th:action="@{/empl/vehiculos}" th:method="GET">
-		<h1>
-			<input type="submit" value="vehiculos">
+		<h1 style="text-align:center">
+			<input type="submit" value="vehiculos" class="btn btn-secondary">
 		</h1>
 	</form>
 	<form th:action="@{/vehiculos/vehiculoReservado}" th:method="GET">
-		<h1>
-			<input type="submit" value="retirar">
+		<h1 style="text-align:center">
+			<input type="submit" value="retirar" class="btn btn-primary">
 		</h1>
 	</form>
 	<form th:action="@{/vehiculos/vistaNoReservados}" th:method="GET">
-		<h1>
-			<input type="submit" value="retirar sin reserva">
+		<h1 style="text-align:center">
+			<input type="submit" value="retirar sin reserva"  class="btn btn-secondary">
 		</h1>
 	</form>
 	<form th:action="@{/menus/reportes}" th:method="GET">
-		<h1>
-			<input type="submit" value="reportes">
+		<h1 style="text-align:center">
+			<input type="submit" value="reportes"  class="btn btn-primary">
 		</h1>
 	</form>
 	<form th:action="@{/menus}" th:method="GET">
-		<h1>
-			<input type="submit" value="volver">
+		<h1 style="text-align:center">
+			<input type="submit" value="volver"  class="btn btn-secondary">
 		</h1>
 	</form>
 

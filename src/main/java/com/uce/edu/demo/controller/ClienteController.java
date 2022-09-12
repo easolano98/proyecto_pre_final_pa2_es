@@ -23,15 +23,19 @@ public class ClienteController {
 
 	@PostMapping("/registrar")
 	public String registrarCliente(ClienteDTO cliente) {
-		System.out.println(" - " + cliente.getCedula());
-		Cliente c = new Cliente();
-		c.setCedula(cliente.getCedula());
-		c.setNombre(cliente.getNombre());
-		c.setApellido(cliente.getApellido());
-		c.setFechaNacimiento(LocalDateTime.parse(cliente.getFecha()));
-		c.setGenero(cliente.getGenero());
-		this.clienteService.insertar(c);
-		return "redirect:/menus/cliente";
+		try {
+			System.out.println(" - " + cliente.getCedula());
+			Cliente c = new Cliente();
+			c.setCedula(cliente.getCedula());
+			c.setNombre(cliente.getNombre());
+			c.setApellido(cliente.getApellido());
+			c.setFechaNacimiento(LocalDateTime.parse(cliente.getFecha()));
+			c.setGenero(cliente.getGenero());
+			this.clienteService.insertar(c);
+			return "redirect:/menus/cliente";
+		} catch (Exception e) {
+			return "redirect:/clientes/registroCliente";
+		}
 	}
 
 	@GetMapping("/registroCliente")
@@ -48,13 +52,20 @@ public class ClienteController {
 
 	@PutMapping("/actualizar")
 	public String actualizarDatos(ClienteDTO cliente) {
-		Cliente c = this.clienteService.buscarCedula(cliente.getCedula());
-		c.setNombre(cliente.getNombre());
-		c.setApellido(cliente.getApellido());
-		c.setGenero(cliente.getGenero());
+		try {
+			Cliente c = this.clienteService.buscarCedula(cliente.getCedula());
+			if (cliente.getNombre().equals("") && cliente.getApellido().equals("") && cliente.getGenero().equals("")) {
+				return "redirect:/clientes/actualizarCliente";
+			}
+			c.setNombre(cliente.getNombre());
+			c.setApellido(cliente.getApellido());
+			c.setGenero(cliente.getGenero());
 
-		this.clienteService.actualizar(c);
-		return "redirect:/menus/cliente";
+			this.clienteService.actualizar(c);
+			return "redirect:/menus/cliente";
+		} catch (Exception e) {
+			return "redirect:/clientes/actualizarCliente";
+		}
 	}
 
 	@GetMapping("/buscarDisponibles")
@@ -66,7 +77,5 @@ public class ClienteController {
 	public String reservar() {
 		return "redirect:/vehiculos/crearReserva";
 	}
-
-
 
 }

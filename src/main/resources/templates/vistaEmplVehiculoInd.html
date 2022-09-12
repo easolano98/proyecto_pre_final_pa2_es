@@ -10,7 +10,22 @@
 		integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 
 </head>
+<style>
+	body {
+		background-color: rgb(204, 255, 238);
+	}
+</style>
 
+<style>
+	body {
+		background-image: url('https://www.budget.com/budgetWeb/images/newlayout/budgetLogoNew1.png');
+		background-repeat: no-repeat;
+		background-attachment: fixed;
+		background-size: 1300px 900px;
+	}
+</style>
+
+<h1 style="text-align:center">Budget Rent A Car</h1>
 <body>
 	<table class="table table-dark table-striped">
 		<thead>
@@ -56,7 +71,7 @@
 		</tbody>
 	</table>
 	<form action="#" th:action="@{/empl/vehiculos}" th:method="GET">
-		<input type="submit" value="Volver">
+		<input type="submit" value="Volver" class="btn btn-warning">
 	</form>
 </body>
 

@@ -11,17 +11,30 @@
 
 </head>
 
+<style>
+	body {
+		background-color: rgb(204, 255, 238);
+	}
+</style>
+
+<style>
+	body {
+		background-image: url('https://www.budget.com/budgetWeb/images/newlayout/budgetLogoNew1.png');
+		background-repeat: no-repeat;
+		background-attachment: fixed;
+		background-size: 1300px 900px;
+	}
+</style>
+
+<h1 style="text-align:center">Budget Rent A Car</h1>
+
 <body>
 	<form action="#" th:action="@{/vehiculos/noReservados}" th:"${reporte}" th:method="PUT">
 		<table class="table table-dark table-striped">
 			<thead>
 				<tr>
-					<th>Marca</th>
-					<th>Modelo</th>
-					<th>Placa</th>
-					<th>Cedula</th>
-					<th>Fecha Fin</th>
-
+					<th>Vehiculo</th>
+					<th>Datos</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -48,6 +61,10 @@
 			</tbody>
 		</table>
 		<input class="btn btn-dark" type="submit" value="Retirar">
+	</form>
+	<br>
+	<form action="#" th:action="@{/menus/empleado}" th:method=" GET">
+		<input class="btn btn-dark" type="submit" value="Volver">
 	</form>
 
 </body>
