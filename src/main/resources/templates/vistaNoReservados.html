@@ -16,11 +16,8 @@
 		<table class="table table-dark table-striped">
 			<thead>
 				<tr>
-					<th>Marca</th>
-					<th>Modelo</th>
-					<th>Placa</th>
-					<th>Cedula</th>
-					<th>Fecha Fin</th>
+					<th>Datos</th>
+					<th>Ingresados</th>
 
 				</tr>
 			</thead>
@@ -48,6 +45,9 @@
 			</tbody>
 		</table>
 		<input class="btn btn-dark" type="submit" value="Retirar">
+	</form>
+	<form action="#" th:action="@{/menus/empleado}" th:method=" GET">
+		<input class="btn btn-dark" type="submit" value="Volver">
 	</form>
 
 </body>

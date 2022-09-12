@@ -29,7 +29,7 @@ public class EmpleadoController {
 
 	@Autowired
 	private IClienteService iClienteService;
-	
+
 	@Autowired
 	private IVehiculoService iVehiculoService;
 
@@ -42,40 +42,56 @@ public class EmpleadoController {
 
 	@PostMapping("/registrar")
 	public String registrarCliente(ClienteDTO cliente) {
-		System.out.println(" - " + cliente.getCedula());
-		Cliente c = new Cliente();
-		c.setCedula(cliente.getCedula());
-		c.setNombre(cliente.getNombre());
-		c.setApellido(cliente.getApellido());
-		c.setFechaNacimiento(LocalDateTime.parse(cliente.getFecha()));
-		c.setGenero(cliente.getGenero());
-		this.iEmpleadoService.registrarCliente(c);
-		return "redirect:/empl/clientes";
+		try {
+			System.out.println(" - " + cliente.getCedula());
+			Cliente c = new Cliente();
+			c.setCedula(cliente.getCedula());
+			c.setNombre(cliente.getNombre());
+			c.setApellido(cliente.getApellido());
+			c.setFechaNacimiento(LocalDateTime.parse(cliente.getFecha()));
+			c.setGenero(cliente.getGenero());
+			this.iEmpleadoService.registrarCliente(c);
+			return "redirect:/empl/clientes";
+		} catch (Exception e) {
+			return "redirect:/empl/registroCliente";
+		}
 	}
 
 	@GetMapping("/clienteBusq/{id}")
 	public String buscarCliente(@PathVariable("id") Integer id, Model modelo) {
-		Cliente c = this.iClienteService.buscar(id);
-		modelo.addAttribute("cliente", c);
-		return "vistaEmplClienteInd";
+		try {
+			Cliente c = this.iClienteService.buscar(id);
+			modelo.addAttribute("cliente", c);
+			return "vistaEmplClienteInd";
+		} catch (Exception e) {
+			return "redirect:/empl/clientes";
+		}
 	}
 
 	@PutMapping("/clienteAct/{idCliente}")
 	public String actualizarCliente(@PathVariable("idCliente") Integer id, Cliente cliente) {
-		cliente.setId(id);
-		System.out.println(" Nombre: " + cliente.getNombre());
-		Cliente c = this.iClienteService.buscar(id);
-		cliente.setCedula(c.getCedula());
-		cliente.setFechaNacimiento(c.getFechaNacimiento());
-		cliente.setRegistro(c.getRegistro());
-		this.iClienteService.actualizar(cliente);
-		return "redirect:/empl/clientes";
+		try {
+			cliente.setId(id);
+			System.out.println(" Nombre: " + cliente.getNombre());
+			Cliente c = this.iClienteService.buscar(id);
+			cliente.setCedula(c.getCedula());
+			cliente.setFechaNacimiento(c.getFechaNacimiento());
+			cliente.setRegistro(c.getRegistro());
+			this.iClienteService.actualizar(cliente);
+			return "redirect:/empl/clientes";
+		} catch (Exception e) {
+			return "redirect:/empl/clientes";
+		}
 	}
 
 	@DeleteMapping("/clienteDel/{id}")
 	public String eliminarCliente(@PathVariable("id") Integer id) {
-		this.iClienteService.eliminar(id);
-		return "redirect:/empl/clientes";
+		try {
+			this.iClienteService.eliminar(id);
+			return "redirect:/empl/clientes";
+		} catch (Exception e) {
+			return "redirect:/empl/clientes";
+		}
 	}
 
 	// Metodos de redireccionamiento a paginas
@@ -93,7 +109,6 @@ public class EmpleadoController {
 	}
 
 	// Vehiculos
-
 	@GetMapping("/vehiculos")
 	public String verVehiculos(Model modelo) {
 		List<Vehiculo> vehiculos = this.iEmpleadoService.verVehiculos();
@@ -103,39 +118,53 @@ public class EmpleadoController {
 
 	@PostMapping("/ingresarVehiculo")
 	public String registrarVehiculos(Vehiculo vehiculo) {
-		System.out.println(" - " + vehiculo.getPlaca());
-
-		this.iEmpleadoService.ingresarVehiculo(vehiculo);
-		return "redirect:/empl/vehiculos";
+		try {
+			this.iEmpleadoService.ingresarVehiculo(vehiculo);
+			return "redirect:/empl/vehiculos";
+		} catch (Exception e) {
+			return "redirect:/empl/ingresoVehiculo";
+		}
 	}
 
 	@GetMapping("/vehiculoBusq/{placa}")
 	public String buscarVehiculos(@PathVariable("placa") String placa, Model modelo) {
-		Vehiculo v = this.iVehiculoService.buscarPlaca(placa);
-		modelo.addAttribute("vehiculo", v);
-		return "vistaEmplVehiculoInd";
+		try {
+			Vehiculo v = this.iVehiculoService.buscarPlaca(placa);
+			modelo.addAttribute("vehiculo", v);
+			return "vistaEmplVehiculoInd";
+		} catch (Exception e) {
+			return "redirect:/empl/vehiculos";
+		}
 	}
 
 	@PutMapping("/vehiculoActualizar/{placa}")
 	public String actualizarVehiculos(@PathVariable("placa") String placa, Vehiculo vehiculo) {
-		vehiculo.setPlaca(placa);
-		System.out.println(" Nombre: " + vehiculo.getPlaca());
-		Vehiculo v = this.iVehiculoService.buscarPlaca(placa);
-		vehiculo.setId(v.getId());
-		vehiculo.setEstado(v.getEstado());
-		this.iVehiculoService.actualizar(vehiculo);
-		return "redirect:/empl/vehiculos";
+		try {
+			vehiculo.setPlaca(placa);
+			System.out.println(" Nombre: " + vehiculo.getPlaca());
+			Vehiculo v = this.iVehiculoService.buscarPlaca(placa);
+			vehiculo.setId(v.getId());
+			vehiculo.setEstado(v.getEstado());
+			this.iVehiculoService.actualizar(vehiculo);
+			return "redirect:/empl/vehiculos";
+		} catch (Exception e) {
+			return "redirect:/empl/vehiculos";
+		}
 	}
 
 	@DeleteMapping("/vehiculoEliminar/{placa}")
 	public String eliminarVehiculos(@PathVariable("placa") String placa) {
-		this.iVehiculoService.eliminar(placa);
-		return "redirect:/empl/vehiculos";
+		try {
+			this.iVehiculoService.eliminar(placa);
+			return "redirect:/empl/vehiculos";
+		} catch (Exception e) {
+			return "redirect:/empl/vehiculos";
+		}
 	}
 
 	// Metodos de redireccionamiento a paginas
 	@GetMapping("/ingresoVehiculo")
-	public String registoVehiculos( Vehiculo v, Model modelo) {
+	public String registoVehiculos(Vehiculo v, Model modelo) {
 		modelo.addAttribute("vehiculo", v);
 		return "vistaEmplInsertarVehiculo";
 	}

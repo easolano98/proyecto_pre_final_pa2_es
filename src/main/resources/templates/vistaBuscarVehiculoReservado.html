@@ -14,9 +14,9 @@
 	<form th:action="@{/vehiculos/reservados}" th:object="${verificacion}" th:method="GET">
 		<table class="table table-bordered">
 			<thead>
-			<tr>
-				<th>Ingrese el numero de Reserva</th>
-			</tr>
+				<tr>
+					<th>Ingrese el numero de Reserva</th>
+				</tr>
 			</thead>
 			<tr>
 				<td><label>Numero:</label></td>
@@ -24,6 +24,9 @@
 			</tr>
 		</table>
 		<input type="submit" value="Buscar" class="btn btn-primary">
+	</form>
+	<form action="#" th:action="@{/menus/empleado}" th:method="GET">
+		<input class="btn btn-dark" type="submit" value="Volver">
 	</form>
 </body>
 
