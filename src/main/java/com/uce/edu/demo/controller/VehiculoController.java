@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.uce.edu.demo.repository.modelo.Reserva;
 import com.uce.edu.demo.repository.modelo.Vehiculo;
+import com.uce.edu.demo.repository.modelo.dto.VehiculoVIP;
 import com.uce.edu.demo.repository.modelo.dto.controller.ReservaDto;
 import com.uce.edu.demo.service.IGestorReservasService;
 import com.uce.edu.demo.service.IReservaService;
@@ -28,12 +29,12 @@ public class VehiculoController {
 	private IGestorReservasService gestorReservasService;
 	@Autowired
 	private IReservaService reservaService;
-	
+
 	@GetMapping("/disponibles")
 	public String consultaDisponibles(Vehiculo vehiculo) {
 		return "vistaConsultaDisponibles";
 	}
-	
+
 	@GetMapping("/buscarDisponibles")
 	public String vehiculosDisponibles(Vehiculo vehiculo, Model model) {
 		List<Vehiculo> disponibles = this.vehiculoService.buscarMarcaModeloDisponible(vehiculo.getMarca(),
@@ -41,12 +42,12 @@ public class VehiculoController {
 		model.addAttribute("disponibles", disponibles);
 		return "vistaBusquedaDisponibles";
 	}
-	
+
 	@GetMapping("/crearReserva")
 	public String paginaNuevoProducto(ReservaDto reservaDto) {
 		return "vistaGenerarReserva";
 	}
-	
+
 	@PostMapping("/reservar")
 	public String reservarVehiculo(ReservaDto reserva, Model modelo) {
 
@@ -66,6 +67,22 @@ public class VehiculoController {
 		return "redirect:/vehiculos/crearReserva";
 	}
 
-	
+	@GetMapping("/vehiculoReservado")
+	public String verificarReserva(Model modelo, VehiculoVIP vehiculoVIP) {
+
+		modelo.addAttribute("verificacion", vehiculoVIP);
+
+		return "vistaBuscarVehiculoReservado";
+
+	}
+
+	@GetMapping("/reservados/{numero}")
+	public String buscarReservados(@PathVariable("numero") String numero, Reserva reserva, Model modelo) {
+
+		VehiculoVIP vehiculoVIP = this.gestorReservasService.retirarVehiculo(numero);
+		modelo.addAttribute("retirar", vehiculoVIP);
+
+		return "vistaRetirarVehiculo";
+	}
 
 }
